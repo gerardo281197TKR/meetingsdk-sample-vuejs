@@ -50,13 +50,12 @@ export default {
     },
     startMeeting(signature) {
       let meetingSDKElement = document.getElementById('meetingSDKElement');
-
       this.client.init({
         debug: true,
         zoomAppRoot: meetingSDKElement,
-        language: 'en-US',
+        language: 'es-ES',
         customize: {
-          meetingInfo: ['topic', 'host', 'mn', 'pwd', 'telPwd', 'invite', 'participant', 'dc', 'enctype'],
+          meetingInfo: ['topic', 'host', 'mn', 'telPwd', 'participant', 'dc', 'enctype'],
           toolbar: {
             buttons: [
               {
@@ -68,18 +67,27 @@ export default {
               }
             ]
           }
-        }
+        },
+      }).then((d) => {
+        console.log('success');
+      }).catch((e) => {
+        console.log('error');
       });
 
       this.client.join({
         apiKey: this.apiKey,
-        signature: signature,
+        signature: this.signature,
         meetingNumber: this.meetingNumber,
         password: this.passWord,
         userName: this.userName,
         userEmail: this.userEmail,
-        tk: this.registrantToken
-      })
+        tk: this.registrantToken,    
+      }).then((data) => {
+        console.log('a');
+      }).catch((error) => {
+        console.log('error');
+      });
+      
     }
   }
 }
